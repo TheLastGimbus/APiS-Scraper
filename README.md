@@ -6,20 +6,30 @@ Oto prosta biblioteka która pobiera strone http://ewybory.eu/sondaze (mam nadzi
 Możesz je wykorzystać do jakiegoś kreatywnego fajnego projektu :)
 
 #### Jak korzystać?
+ - Zainstaluj potrzebne bilbioteki przez pip - `pip install -r requirements.txt`
+   Lub `pip install beautifulsoup4 requests`
  - Dodaj plik `apis_scraper.py` do tego samego folderu co reszta projektu
  - Zaimportuj go: `import apis_scraper`
  - Użyj funkcji `apis_scraper.scrape()`. Zwraca ona słownik, wyglądający tak:
 ```python
 {
-  'success': True  # Czy się udało, jeśli nie - False
-  'support' : {  # Słownik z % poparcia - liczba z przecinkiem
-    'pis': 10.0,
-    'ko': 10.0,
-    'lewica': 10.0,
-    'konfederacja': 10.0,
-    'psl': 10.0,
-    'polska2050': 10.0
-  }  # Jeśli coś pójdzie nie tak, wszysktkie poparcia będą -1 a 'success' = False
+    'success': True,  # Czy się udało, jeśli nie - False
+    'support' : {  # Słownik z % poparcia - liczba z przecinkiem
+        'pis': 10.0,
+        'ko': 10.0,
+        'lewica': 10.0,
+        'konfederacja': 10.0,
+        'psl': 10.0,
+        'polska2050': 10.0
+    },  # Jeśli coś pójdzie nie tak, wszysktkie poparcia będą -1 a 'success' = False
+    'growth': {  # Czy poparcie rośnie/spada. -1=spada, 0=takie same, 1=rośnie
+        'pis': 0,
+        'ko': 0,
+        'lewica': 0,
+        'konfederacja': 0,
+        'psl': 0,
+        'polska2050': 0
+    }
 }
 ```
 Przykładowy kod:
@@ -42,20 +52,30 @@ This is a simple library which downloads site http://ewybory.eu/sondaze (I hope 
 You can then use it for some fun creative project ;)
 
 #### How to use?
+ - Install required libararies with pip - `pip install -r requirements.txt`
+   Or `pip install beautifulsoup4 requests`
  - Add file `apis_scraper.py` to the same folder as your project
  - Import it: `import apis_scraper`
  - Use function `apis_scraper.scrape()`. It returns a dict, which looks like this:
 ```python
 {
-  'success': True  # If it was succesfull, if not - False
-  'support' : {  # Dict with % of support - in float
-    'pis': 10.0,
-    'ko': 10.0,
-    'lewica': 10.0,
-    'konfederacja': 10.0,
-    'psl': 10.0,
-    'polska2050': 10.0
-  }  # If something goes wrong, all supports will be -1 and 'success' = False
+    'success': True,  # If it was succesfull, if not - False
+    'support' : {  # Dict with % of support - in float
+        'pis': 10.0,
+        'ko': 10.0,
+        'lewica': 10.0,
+        'konfederacja': 10.0,
+        'psl': 10.0,
+        'polska2050': 10.0
+    },  # If something goes wrong, all supports will be -1 and 'success' = False
+    'growth': {  # Whether support is growing or falling. -1=falling, 0=stays same, 1=growing
+        'pis': 0,
+        'ko': 0,
+        'lewica': 0,
+        'konfederacja': 0,
+        'psl': 0,
+        'polska2050': 0
+    }
 }
 ```
 
