@@ -4,6 +4,7 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
+import json
 
 
 def _get_site():
@@ -36,7 +37,7 @@ def _get_sup(th):
     return [float(parts[0]), growth]
 
 
-def scrape(no_cache=False, cache_file_name='wyniki.json'):
+def scrape(no_cache=False, cache_file_name='wyniki.json', cache_expire_time=24*60*60):
     result = {
         'success': False,
         'support': {
@@ -62,10 +63,11 @@ def scrape(no_cache=False, cache_file_name='wyniki.json'):
         if no_cache:
             raise ValueError
         modify = os.path.getmtime(cache_file_name)
-        if modify < time.time() - 24 * 60 * 60:  # If cache file is older than 24h
+        if modify < time.time() - cache_expire_time:  # If cache file is older than 24h
             raise IOError
         with open(cache_file_name, 'rb') as f:
-            soup = BeautifulSoup(f, 'html.parser')
+            print('Got results from cache')
+            return json.load(f)
     except FileNotFoundError:
         print('Cache file not found!')
         get_site = True
@@ -146,5 +148,9 @@ def scrape(no_cache=False, cache_file_name='wyniki.json'):
     result['growth']['polska2050'] = polska2050_sup[1]
 
     result['success'] = True
+
+    if not no_cache:
+        with open(cache_file_name, 'w') as f:
+            json.dump(result, f)
 
     return result
