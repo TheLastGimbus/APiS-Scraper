@@ -45,6 +45,17 @@ if wyniki['support']['pis'] < wyniki['support']['ko']:
     print('Trzeba anulować, bo przegramy...')
 ```
 
+Domyślnie, biblioteka zapisuje wyniki w pliku `vote-results.json`, żeby nie musiała zawsze pobierać strony z internetu - wyniki i tak zmieniają sie co ~tydzień.
+Zapisane wyniki wyczerpują się po 24 godzinach.
+Jeśli chcesz to zmienić, możesz:
+```python
+apis_scraper.scrape(
+  no_cache=True,  # Kompletenie wyłącza zapisywanie w pliku - nie polecam
+  cache_file_name='dupa12.json',  # Zmienia nazwe pliku
+  cache_expire_time=1*60*60  # Zmienia czas po którym plik sie wyczerpuje, i strona jest pobierana na nowo
+)
+```
+
 ## EN
 ### Python web scraper for getting Polish political parties support percentage!
 This is a simple library which downloads site http://ewybory.eu/sondaze (I hope that administators don't mind ;) and scrapes support percentage of each party from it
@@ -90,4 +101,15 @@ if wyniki['success'] == False:
 
 if wyniki['support']['pis'] < wyniki['support']['ko']:
     print('We need to cancel, or we will lose...')
+```
+
+By default, library saves results in `vote-results.json` file, so it doesn't need to download the site every time - results change ~once a week anyway.
+Saved results expire after 24h
+If you want to change this, you can:
+```python
+apis_scraper.scrape(
+  no_cache=True,  # Completley disable cache - not recommended
+  cache_file_name='dupa12.json',  # Change file name
+  cache_expire_time=1*60*60  # Change time after file expires, and site is downloaded again
+)
 ```
