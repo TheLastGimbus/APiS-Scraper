@@ -37,7 +37,7 @@ def _get_sup(th):
     return [float(parts[0]), growth]
 
 
-def scrape(no_cache=False, cache_file_name='wyniki.json', cache_expire_time=24*60*60):
+def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_time=24*60*60):
     result = {
         'success': False,
         'support': {
