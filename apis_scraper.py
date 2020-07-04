@@ -1,6 +1,8 @@
+from time import sleep
+
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
+
 
 def _get_site():
     for a in range(5):
@@ -16,6 +18,7 @@ def _get_site():
 
     print('Couldnt get site!')
     return None
+
 
 def _get_name(th):
     return th.find('div').text
