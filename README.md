@@ -112,6 +112,7 @@ If you want to change this, you can:
 apis_scraper.scrape(
   no_cache=True,  # Completley disable cache - not recommended
   cache_file_name='dupa12.json',  # Change file name
-  cache_expire_time=1*60*60  # Change time after file expires, and site is downloaded again
+  cache_expire_time=1*60*60
+  # Change time (in seconds) after file expires, and site is downloaded again
 )
 ```
