@@ -52,7 +52,9 @@ Jeśli chcesz to zmienić, możesz:
 apis_scraper.scrape(
   no_cache=True,  # Kompletenie wyłącza zapisywanie w pliku - nie polecam
   cache_file_name='dupa12.json',  # Zmienia nazwe pliku
-  cache_expire_time=1*60*60  # Zmienia czas po którym plik sie wyczerpuje, i strona jest pobierana na nowo
+  cache_expire_time=1*60*60
+  # Zmienia czas (w sekundach) po którym plik sie wyczerpuje,
+  # i strona jest pobierana na nowo
 )
 ```
 
