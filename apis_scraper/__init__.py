@@ -41,6 +41,18 @@ def _get_sup(th):
 
 
 def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_time=24 * 60 * 60):
+    """
+    This function downloads site http://ewybory.eu/sondaze and scrapes it for support data.
+    Then, it saves the results in cache file (named vote-results.json by default),
+    and uses this file for next 24 hours.
+
+    If some party support can't be read for some reason, it will be -1
+
+    :param no_cache: Don't save results in cache file
+    :param cache_file_name: Alternative cache file path
+    :param cache_expire_time: Time (in seconds) after the cache file will be discarded and site will be downloaded again
+    :return: Dict with results
+    """
     result = {
         'success': False,
         'support': {
