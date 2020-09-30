@@ -1,22 +1,22 @@
-import json
-import os
-import time
-from time import sleep
+import json as _json
+import os as _os
+import time as _time
+from time import sleep as _sleep
 
-import requests
-from bs4 import BeautifulSoup
+import requests as _requests
+from bs4 import BeautifulSoup as _BeautifulSoup
 
 
 def _get_site():
     for a in range(5):
         try:
-            res = requests.get('http://ewybory.eu/sondaze')
+            res = _requests.get('http://ewybory.eu/sondaze')
             if res.ok:
                 return res
         except Exception as e:
             print(e)
             print('Couldnt get site...')
-            sleep(a)
+            _sleep(a)
             print('Trying again...')
 
     print('Couldnt get site!')
@@ -65,12 +65,12 @@ def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_tim
     try:
         if no_cache:
             raise ValueError
-        modify = os.path.getmtime(cache_file_name)
-        if modify < time.time() - cache_expire_time:  # If cache file is older than 24h
+        modify = _os.path.getmtime(cache_file_name)
+        if modify < _time.time() - cache_expire_time:  # If cache file is older than 24h
             raise IOError
         with open(cache_file_name, 'rb') as f:
             print('Got results from cache')
-            return json.load(f)
+            return _json.load(f)
     except FileNotFoundError:
         print('Cache file not found!')
         get_site = True
@@ -87,7 +87,7 @@ def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_tim
         if res is None:
             print("Can't get the site! Most probably no internet :/")
             return result
-        soup = BeautifulSoup(res.content, 'html.parser')
+        soup = _BeautifulSoup(res.content, 'html.parser')
 
     print('Parsing with soup...')
 
@@ -121,6 +121,6 @@ def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_tim
 
     if not no_cache:
         with open(cache_file_name, 'w') as f:
-            json.dump(result, f)
+            _json.dump(result, f)
 
     return result
