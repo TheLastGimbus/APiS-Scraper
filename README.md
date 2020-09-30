@@ -6,10 +6,8 @@ Oto prosta biblioteka która pobiera strone http://ewybory.eu/sondaze (mam nadzi
 Możesz je wykorzystać do jakiegoś kreatywnego fajnego projektu :)
 
 #### Jak korzystać?
- - Zainstaluj potrzebne bilbioteki przez pip - `pip install -r requirements.txt`
-   Lub `pip install beautifulsoup4 requests`
- - Dodaj plik `apis_scraper.py` do tego samego folderu co reszta projektu
- - Zaimportuj go: `import apis_scraper`
+ - Zainstaluj: `pip3 install -U apis-scraper`
+ - Zaimportuj: `import apis_scraper`
  - Użyj funkcji `apis_scraper.scrape()`. Zwraca ona słownik, wyglądający tak:
 ```python
 {
@@ -65,9 +63,7 @@ This is a simple library which downloads site http://ewybory.eu/sondaze (I hope 
 You can then use it for some fun creative project ;)
 
 #### How to use?
- - Install required libararies with pip - `pip install -r requirements.txt`
-   Or `pip install beautifulsoup4 requests`
- - Add file `apis_scraper.py` to the same folder as your project
+ - Install it: `pip3 install -U apis-scraper`
  - Import it: `import apis_scraper`
  - Use function `apis_scraper.scrape()`. It returns a dict, which looks like this:
 ```python
