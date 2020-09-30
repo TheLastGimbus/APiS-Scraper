@@ -1,10 +1,10 @@
+import json
 import os
 import time
 from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
-import json
 
 
 def _get_site():
@@ -29,15 +29,18 @@ def _get_name(th):
 
 def _get_sup(th):
     parts = th.find('strong').text.split(' ')
+    if len(parts) != 2:
+        # Something is not yes
+        return [-1, 0]
     growth = 0
-    if parts[1] == '➚':
+    if parts[1] == '▲':
         growth = 1
-    elif parts[1] == '➘':
+    elif parts[1] == '▼':
         growth = -1
     return [float(parts[0]), growth]
 
 
-def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_time=24*60*60):
+def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_time=24 * 60 * 60):
     result = {
         'success': False,
         'support': {
@@ -93,59 +96,26 @@ def scrape(no_cache=False, cache_file_name='vote-results.json', cache_expire_tim
     tr = table.find('tr')
     ths = tr.find_all('th', class_='name_party_poll')
 
-    # PiS
-    print('Getting PiS data...')
-    if _get_name(ths[0]).lower() != 'pis':
-        print("pis is not on it's place on site! Probably site has changed!")
-        return result
-    pis_sup = _get_sup(ths[0])
-    result['support']['pis'] = pis_sup[0]
-    result['growth']['pis'] = pis_sup[1]
+    name_party = {
+        'pis': 'pis',
+        'ko': 'ko',
+        'lewica': 'lewica',
+        'konfederacja': 'konfederacja',
+        'psl': 'psl',
+        'polska 2050': 'polska2050',
+        'n.solidarność': 'nowasolidarnosc'
+    }
 
-    # KO
-    print('Getting KO data...')
-    if _get_name(ths[1]).lower() != 'ko':
-        print("ko is not on it's place on site! Probably site has changed!")
-        return result
-    ko_sup = _get_sup(ths[1])
-    result['support']['ko'] = ko_sup[0]
-    result['growth']['ko'] = ko_sup[1]
-
-    # Lewica
-    print('Getting Lewica data...')
-    if _get_name(ths[2]).lower() != 'lewica':
-        print("lewica is not on it's place on site! Probably site has changed!")
-        return result
-    lewica_sup = _get_sup(ths[2])
-    result['support']['lewica'] = lewica_sup[0]
-    result['growth']['lewica'] = lewica_sup[1]
-
-    # Konfederacja
-    print('Getting Konfederacja data...')
-    if _get_name(ths[3]).lower() != 'konfederacja':
-        print("konfederacja is not on it's place on site! Probably site has changed!")
-        return result
-    konfederacja_sup = _get_sup(ths[3])
-    result['support']['konfederacja'] = konfederacja_sup[0]
-    result['growth']['konfederacja'] = konfederacja_sup[1]
-
-    # PSL
-    print('Getting PSL data...')
-    if _get_name(ths[4]).lower() != 'psl':
-        print("psl is not on it's place on site! Probably site has changed!")
-        return result
-    psl_sup = _get_sup(ths[4])
-    result['support']['psl'] = psl_sup[0]
-    result['growth']['psl'] = psl_sup[1]
-
-    # Polska 2050
-    print('Getting Polska 2050 data...')
-    if _get_name(ths[5]).lower() != 'polska 2050':
-        print("polska 2050 is not on it's place on site! Probably site has changed!")
-        return result
-    polska2050_sup = _get_sup(ths[5])
-    result['support']['polska2050'] = polska2050_sup[0]
-    result['growth']['polska2050'] = polska2050_sup[1]
+    for i in range(len(name_party)):
+        party = name_party.get(_get_name(ths[i]).lower(), None)
+        if party is None:
+            print("Looks like some unknown party is on graph? "
+                  "It's possible that this means that this repo needs update - "
+                  "feel free to make an Issue on GitHub about that :)")
+            continue
+        sup = _get_sup(ths[i])
+        result['support'][party] = sup[0]
+        result['growth'][party] = sup[1]
 
     result['success'] = True
 
